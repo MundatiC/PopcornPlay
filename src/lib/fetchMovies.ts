@@ -25,7 +25,7 @@ export const fetchMovies = async (options: {
   try {
     const { query, genre, year, duration, rating } = options;
 
-    let searchQuery = query ? `s=${query}` : `s=Avengers`;
+    let searchQuery = query ? `s=${query}` : `s=Alien`;
 
     if (genre) {
       searchQuery += `&genre=${genre}`;

@@ -83,8 +83,8 @@ export default function Home() {
       <header className="pt-12 pb-3">
         <h1 className="font-bold text-3xl">Your search</h1>
       </header>
-      <div className="min-h-screen flex flex-col md:flex-row gap-4 md:gap-8 p-4">
-        <aside className="w-full md:w-64">
+      <div className="flex flex-col md:flex-row gap-4 md:gap-8 p-4 h-[calc(100vh-0.001rem)]">
+        <aside className="w-full md:w-64 flex-shrink-0">
           <Collapsible
             open={filters.isFilterOpen}
             onOpenChange={(isOpen) =>
@@ -218,37 +218,40 @@ export default function Home() {
             </CollapsibleContent>
           </Collapsible>
         </aside>
-        <main className="flex-1">
-          <header className="flex w-full gap-x-2">
-            <div className="relative flex-1">
-              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-white" />
-              <Input
-                type="search"
-                placeholder="Search..."
-                className="w-full text-white rounded-lg bg-foreground pl-8"
-                value={filters.searchQuery}
-                onChange={(e) =>
-                  handleFilterChange("searchQuery", e.target.value)
-                }
-              />
-            </div>
-            <Button onClick={handleSearch} className="bg-foreground">
-              <span className="font-semibold">Search</span>
-            </Button>
-          </header>
-          <div className="mt-6 flex flex-col gap-4">
-            {loading ? (
-              <>
-                <MovieCardSkeleton />
-                <MovieCardSkeleton />
-              </>
-            ) : (
-              movies.map((movie, index) => (
-                <MovieCard key={index} movie={movie} />
-              ))
-            )}
-          </div>
-        </main>
+      <main className="flex-1 flex flex-col min-h-0">
+  <header className="flex w-full gap-x-2 flex-shrink-0">
+    <div className="relative flex-1">
+      <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-white" />
+      <Input
+        type="search"
+        placeholder="Search..."
+        className="w-full text-white rounded-lg bg-foreground pl-8"
+        value={filters.searchQuery}
+        onChange={(e) =>
+          handleFilterChange("searchQuery", e.target.value)
+        }
+      />
+    </div>
+    <Button onClick={handleSearch} className="bg-foreground">
+      <span className="font-semibold">Search</span>
+    </Button>
+  </header>
+
+  {/* 👇 scrollable section */}
+  <div className="mt-6 flex-1 min-h-0 overflow-y-auto flex flex-col gap-4">
+    {loading ? (
+      <>
+        <MovieCardSkeleton />
+        <MovieCardSkeleton />
+      </>
+    ) : (
+      movies.map((movie, index) => (
+        <MovieCard key={index} movie={movie} />
+      ))
+    )}
+  </div>
+</main>
+
       </div>
     </>
   );
